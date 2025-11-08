@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h3>Performance Metrics</h3>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <form id="metrics-form" class="card">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="initial_capital" class="form-label">Initial Capital (INR)</label>
+              <input type="number" class="form-control" id="initial_capital" name="initial_capital" 
+                     value="{{ initial_capital|default(100000) }}" min="1000" step="1000">
+            </div>
+            <div class="col-md-6">
+              <label for="time_period" class="form-label">Time Period</label>
+              <select class="form-select" id="time_period" name="time_period">
+                <option value="1D" {% if time_period == '1D' %}selected{% endif %}>1 Day</option>
+                <option value="1W" {% if time_period == '1W' %}selected{% endif %}>1 Week</option>
+                <option value="1Y" {% if time_period == '1Y' %}selected{% endif %}>1 Year</option>
+                <option value="ALL" {% if time_period == 'ALL' %}selected{% endif %}>All Time</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Key Metrics</h5>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Sharpe Ratio</th>
+                <td id="sharpe-ratio">{{ metrics.Sharpe_Ratio|default(0)|round(2) }}</td>
+              </tr>
+              <tr>
+                <th>Sortino Ratio</th>
+                <td id="sortino-ratio">{{ metrics.Sortino_Ratio|default(0)|round(2) }}</td>
+              </tr>
+              <tr>
+                <th>Max Drawdown</th>
+                <td id="max-drawdown">{{ metrics.Max_Drawdown|default(0)|round(2) }}%</td>
+              </tr>
+              <tr>
+                <th>CAGR</th>
+                <td id="cagr">{{ metrics.CAGR|default(0)|round(2) }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Metrics Visualization</h5>
+          <div id="metrics-chart">
+            {{ chart_html|safe if chart_html else '' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Plotly.js if not already included in base template -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Include our metrics.js for real-time updates -->
+  <script src="{{ url_for('static', filename='js/metrics.js') }}"></script>
+{% endblock %}

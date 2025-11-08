@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Risk Management</h3>
+        
+        <!-- Risk Parameters Form -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Customize Risk Parameters</h5>
+          </div>
+          <div class="card-body">
+            <form id="riskForm" method="post" class="row g-3">
+              <div class="col-md-3">
+                <label for="initial_capital" class="form-label">Initial Capital (INR)</label>
+                <input type="number" class="form-control" id="initial_capital" name="initial_capital" 
+                       value="{{ request.form.get('initial_capital', '100000') }}" 
+                       min="1000" step="1000" required>
+              </div>
+              <div class="col-md-3">
+                <label for="risk_per_trade" class="form-label">Risk per Trade (%)</label>
+                <input type="number" class="form-control" id="risk_per_trade" name="risk_per_trade" 
+                       value="{{ request.form.get('risk_per_trade', '1.0') }}"
+                       min="0.1" max="5" step="0.1" required>
+              </div>
+              <div class="col-md-3">
+                <label for="stop_loss_pct" class="form-label">Stop Loss (%)</label>
+                <input type="number" class="form-control" id="stop_loss_pct" name="stop_loss_pct" 
+                       value="{{ request.form.get('stop_loss_pct', '2.0') }}"
+                       min="0.5" max="10" step="0.1" required>
+              </div>
+              <div class="col-md-3">
+                <label for="var_confidence" class="form-label">VaR Confidence (%)</label>
+                <input type="number" class="form-control" id="var_confidence" name="var_confidence" 
+                       value="{{ request.form.get('var_confidence', '95.0') }}"
+                       min="90" max="99" step="0.5" required>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update Risk Analysis</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset to Defaults</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Risk Metrics Table -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Risk Metrics</h5>
+          </div>
+          <div class="card-body">
+            {% if table %}
+              {{ table|safe }}
+            {% else %}
+              <p>No risk metrics available.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Risk Allocation Chart -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h5 class="mb-0">Risk Allocation Visualization</h5>
+          </div>
+          <div class="card-body">
+            {% if chart_html %}
+              {{ chart_html|safe }}
+            {% else %}
+              <p class="text-center text-muted">No risk allocation data available</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Risk Analysis Explanation -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="alert alert-info">
+          <h5>Understanding the Risk Analysis:</h5>
+          <ul>
+            <li><strong>Value at Risk (VaR):</strong> Maximum potential loss at your chosen confidence level</li>
+            <li><strong>Expected Shortfall:</strong> Average loss beyond VaR threshold</li>
+            <li><strong>Allocated Capital:</strong> Amount currently allocated to positions</li>
+            <li><strong>Available Capital:</strong> Remaining capital available for trading</li>
+            <li><strong>Risk per Trade:</strong> Maximum risk allowed per individual trade</li>
+            <li><strong>Stop Loss:</strong> Automatic exit point to limit potential losses</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to reset form to default values
+    function resetForm() {
+      document.getElementById('initial_capital').value = '100000';
+      document.getElementById('risk_per_trade').value = '1.0';
+      document.getElementById('stop_loss_pct').value = '2.0';
+      document.getElementById('var_confidence').value = '95.0';
+      document.getElementById('riskForm').submit();
+    }
+
+    // Add input validation
+    document.querySelectorAll('#riskForm input[type="number"]').forEach(input => {
+      input.addEventListener('change', function() {
+        const value = parseFloat(this.value);
+        const min = parseFloat(this.min);
+        const max = parseFloat(this.max);
+        
+        if (value < min) this.value = min;
+        if (value > max) this.value = max;
+      });
+    });
+
+    // Prevent form submission if inputs are invalid
+    document.getElementById('riskForm').addEventListener('submit', function(event) {
+      if (!this.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      this.classList.add('was-validated');
+    });
+  </script>
+{% endblock %}

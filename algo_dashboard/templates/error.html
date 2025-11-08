@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card error-card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Error</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        {{ error_message }}
+                    </div>
+                    <div class="mt-4">
+                        <h5>Current Settings:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Initial Capital: ${{ initial_capital }}</li>
+                            <li class="list-group-item">Short Window: {{ short_window }}</li>
+                            <li class="list-group-item">Long Window: {{ long_window }}</li>
+                        </ul>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="/" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Return to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

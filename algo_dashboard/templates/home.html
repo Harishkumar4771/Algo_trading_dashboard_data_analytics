@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Strategy Control Panel -->
+<div class="card mb-4 strategy-panel">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Strategy Controls</h5>
+        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse" data-bs-target="#strategyForm">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </div>
+    <div id="strategyForm" class="collapse show">
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input name="initial_capital" type="number" class="form-control" id="initialCapital" 
+                               value="{{ initial_capital }}" min="1000" step="1000" required>
+                        <label for="initialCapital">Initial Capital (₹)</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input name="short_window" type="number" class="form-control" id="shortMA" 
+                               value="{{ short_window }}" min="1" required>
+                        <label for="shortMA">Short MA Period</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input name="long_window" type="number" class="form-control" id="longMA" 
+                               value="{{ long_window }}" min="1" required>
+                        <label for="longMA">Long MA Period</label>
+                    </div>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-play me-2"></i>Run Analysis
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Summary -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100 performance-card">
+            <div class="card-body text-center">
+                <div class="performance-icon mb-3">
+                    <i class="fas fa-wallet fa-2x text-primary"></i>
+                </div>
+                <h6 class="text-muted mb-2">Final Portfolio Value</h6>
+                <h3 class="mb-0">₹{{ '{:,.2f}'.format(final_portfolio_value) }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 performance-card">
+            <div class="card-body text-center">
+                <div class="performance-icon mb-3">
+                    <i class="fas fa-chart-line fa-2x {{ 'text-success' if total_profit_loss > 0 else 'text-danger' }}"></i>
+                </div>
+                <h6 class="text-muted mb-2">Total Profit/Loss</h6>
+                <h3 class="mb-0 {{ 'text-success' if total_profit_loss > 0 else 'text-danger' }}">
+                    ₹{{ '{:,.2f}'.format(total_profit_loss) }}
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 performance-card">
+            <div class="card-body text-center">
+                <div class="performance-icon mb-3">
+                    <i class="fas fa-percentage fa-2x {{ 'text-success' if percentage_return > 0 else 'text-danger' }}"></i>
+                </div>
+                <h6 class="text-muted mb-2">Return</h6>
+                <h3 class="mb-0 {{ 'text-success' if percentage_return > 0 else 'text-danger' }}">
+                    {{ '{:.2f}'.format(percentage_return) }}%
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 performance-card">
+            <div class="card-body text-center">
+                <div class="performance-icon mb-3">
+                    <i class="fas fa-check-circle fa-2x {{ 'text-success' if percentage_return > 0 else 'text-warning' }}"></i>
+                </div>
+                <h6 class="text-muted mb-2">Assessment</h6>
+                <h3 class="mb-0 {{ 'text-success' if percentage_return > 0 else 'text-warning' }}">
+                    {{ profitability_assessment }}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">
+            <i class="fas fa-chart-area me-2"></i>Price Analysis
+        </h5>
+    </div>
+    <div class="card-body">
+        <div id="mainChart" class="chart-container">
+            {{ chart_html|safe }}
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="fas fa-coins me-2"></i>Portfolio Value
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    {{ portfolio_chart_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Drawdown Analysis
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    {{ drawdown_chart_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-line me-2"></i>Cumulative Returns
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    {{ cumulative_chart_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Analysis Section -->
+<div class="row g-4">
+    <!-- Performance Metrics -->
+    <div class="col-lg-6">
+        <div class="card h-100 analysis-card">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>Performance Metrics
+                </h5>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" 
+                        title="Download performance report">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-chart-line text-primary me-2"></i>
+                                    <span>Sharpe Ratio</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Risk-adjusted return metric"></i>
+                                </td>
+                                <td class="text-end fw-bold {{ 'text-success' if sharpe_ratio > 1 else 'text-warning' }}">
+                                    {{ '{:.2f}'.format(sharpe_ratio) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-chart-area text-primary me-2"></i>
+                                    <span>Sortino Ratio</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Downside risk-adjusted return"></i>
+                                </td>
+                                <td class="text-end fw-bold {{ 'text-success' if sortino_ratio > 1 else 'text-warning' }}">
+                                    {{ '{:.2f}'.format(sortino_ratio) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-arrow-trend-down text-primary me-2"></i>
+                                    <span>Max Drawdown</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Maximum peak-to-trough decline"></i>
+                                </td>
+                                <td class="text-end fw-bold text-danger">
+                                    {{ '{:.2f}'.format(max_drawdown) }}%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-chart-bar text-primary me-2"></i>
+                                    <span>CAGR</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Compound Annual Growth Rate"></i>
+                                </td>
+                                <td class="text-end fw-bold {{ 'text-success' if cagr > 0 else 'text-danger' }}">
+                                    {{ '{:.2f}'.format(cagr) }}%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-exchange-alt text-primary me-2"></i>
+                                    <span>Total Trades</span>
+                                </td>
+                                <td class="text-end fw-bold">{{ num_trades }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-bullseye text-primary me-2"></i>
+                                    <span>Win Rate</span>
+                                </td>
+                                <td class="text-end fw-bold {{ 'text-success' if win_rate|float > 50 else 'text-warning' }}">
+                                    {{ win_rate }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Risk Management -->
+    <div class="col-lg-6">
+        <div class="card h-100 analysis-card">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-shield-alt me-2"></i>Risk Management
+                </h5>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" 
+                        title="Download risk report">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-coins text-primary me-2"></i>
+                                    <span>Recommended Position Size</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Optimal position size based on risk metrics"></i>
+                                </td>
+                                <td class="text-end fw-bold">{{ recommended_position_size }} units</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-hand-holding-usd text-primary me-2"></i>
+                                    <span>Stop Loss (Long)</span>
+                                </td>
+                                <td class="text-end fw-bold">₹{{ '{:,.2f}'.format(stop_loss_long) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-hand-holding-dollar text-primary me-2"></i>
+                                    <span>Stop Loss (Short)</span>
+                                </td>
+                                <td class="text-end fw-bold">₹{{ '{:,.2f}'.format(stop_loss_short) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-chart-pie text-primary me-2"></i>
+                                    <span>Value at Risk (95%)</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Maximum potential loss at 95% confidence"></i>
+                                </td>
+                                <td class="text-end fw-bold text-danger">₹{{ '{:,.2f}'.format(value_at_risk) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-exclamation-triangle text-primary me-2"></i>
+                                    <span>Expected Shortfall</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Average loss beyond VaR"></i>
+                                </td>
+                                <td class="text-end fw-bold text-danger">₹{{ '{:,.2f}'.format(expected_shortfall) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-balance-scale text-primary me-2"></i>
+                                    <span>Risk/Reward Ratio</span>
+                                </td>
+                                <td class="text-end fw-bold">{{ '{:.2f}'.format(risk_reward_ratio) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-percent text-primary me-2"></i>
+                                    <span>Risk per Trade</span>
+                                    <i class="fas fa-info-circle ms-2 text-muted" data-bs-toggle="tooltip"
+                                       title="Recommended risk percentage per trade"></i>
+                                </td>
+                                <td class="text-end fw-bold">{{ '{:.1f}'.format(recommended_risk_per_trade) }}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

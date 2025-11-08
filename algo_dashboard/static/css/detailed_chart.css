@@ -1,0 +1,329 @@
+/* Detailed Chart Styles */
+.chart-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 30px 20px;
+    margin-bottom: 30px;
+}
+
+/* Dashboard title container */
+.dashboard-title {
+    position: relative;
+    margin: 0 0 25px 0;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+
+/* Override Plotly's default title positioning */
+.js-plotly-plot {
+    margin-top: 20px !important;
+}
+
+.plot-container.plotly {
+    position: relative !important;
+}
+
+.plot-container.plotly .main-svg {
+    transform: translateY(0) !important;
+}
+
+/* Custom title styles */
+.chart-title-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: white;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Technical Analysis Dashboard Header */
+.technical-header {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 30px 0 25px;
+    padding: 15px 0;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Chart Legend Styles */
+.js-plotly-plot .plotly .legend {
+    background: rgba(255, 255, 255, 0.98) !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    margin-top: 30px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+    width: 100% !important;
+}
+
+.js-plotly-plot .plotly .legend .traces {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+    margin-bottom: 10px !important;
+}
+
+.js-plotly-plot .plotly .legend .trace {
+    display: flex !important;
+    align-items: center !important;
+    margin: 8px 20px 8px 0 !important;
+    padding: 4px 8px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.js-plotly-plot .plotly .legendtext {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    padding: 6px 10px !important;
+    line-height: 1.5 !important;
+    margin-left: 8px !important;
+    white-space: nowrap !important;
+}
+
+/* Legend symbol spacing */
+.js-plotly-plot .plotly .legendtoggle,
+.js-plotly-plot .plotly .legendicon {
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+}
+
+/* Indicator Labels */
+.js-plotly-plot .plotly text.annotation-text {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    padding: 4px !important;
+}
+
+/* Main Dashboard Title */
+.js-plotly-plot .plotly .gtitle {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    padding: 0 !important;
+    margin: 0 0 30px 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    color: #1e293b !important;
+    text-align: left !important;
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+/* Add spacing below title */
+.js-plotly-plot .plotly .plot-container {
+    margin-top: 50px !important;
+    position: relative !important;
+}
+
+/* Move the entire chart area down */
+.js-plotly-plot .plotly .main-svg {
+    position: relative !important;
+    margin-top: 20px !important;
+}
+
+/* Price & Indicators Legend Section */
+.js-plotly-plot .plotly .legend-price-indicators {
+    position: relative !important;
+    margin-top: 40px !important;
+    padding: 15px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* Indicator group spacing */
+.js-plotly-plot .plotly .legend-group {
+    margin: 15px 0 !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.js-plotly-plot .plotly .legend-group:last-child {
+    border-bottom: none !important;
+}
+
+/* Individual indicator items */
+.js-plotly-plot .plotly .legend-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin: 5px 15px 5px 0 !important;
+    padding: 4px 8px !important;
+    background: white !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+
+/* Chart areas and lines */
+.js-plotly-plot .plotly .scattergl .lines {
+    opacity: 0.9 !important;
+}
+
+/* Ensure proper spacing between chart and legend */
+.js-plotly-plot .plotly .plot-container {
+    margin-bottom: 30px !important;
+}
+
+/* Chart cursor and tooltip styles */
+.chart-cursor-info {
+    position: absolute;
+    background: rgba(30, 41, 59, 0.95);
+    color: #f8fafc;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    backdrop-filter: blur(4px);
+}
+
+.chart-cursor-info .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+.chart-cursor-info .date {
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.chart-cursor-info .details {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Chart grid and axis styles */
+.js-plotly-plot .plotly .gridlayer path {
+    stroke: #e2e8f0 !important;
+    stroke-width: 1 !important;
+}
+
+.js-plotly-plot .plotly .zerolinelayer path {
+    stroke: #cbd5e1 !important;
+    stroke-width: 1 !important;
+}
+
+/* Chart spikeline styles */
+.js-plotly-plot .plotly .spikeline {
+    stroke: #94a3b8 !important;
+    stroke-width: 1 !important;
+    stroke-dasharray: 2,2;
+}
+
+/* Range selector button styles */
+.js-plotly-plot .plotly .rangeselector {
+    font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+.js-plotly-plot .plotly .button {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 4px !important;
+    color: #475569 !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    margin: 0 2px !important;
+    transition: all 0.2s ease !important;
+}
+
+.js-plotly-plot .plotly .button.active {
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: white !important;
+}
+
+/* Chart annotation styles */
+.js-plotly-plot .plotly .annotation-text {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: 11px !important;
+}
+
+/* Price level indicators */
+.price-level-indicator {
+    position: absolute;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+}
+
+.price-level-high {
+    background: rgba(16, 185, 129, 0.9);
+}
+
+.price-level-low {
+    background: rgba(239, 68, 68, 0.9);
+}
+
+.price-level-current {
+    background: rgba(59, 130, 246, 0.9);
+}
+
+/* Detailed breakdown panel */
+.chart-breakdown-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    font-size: 12px;
+    z-index: 100;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.breakdown-label {
+    color: #64748b;
+    margin-right: 12px;
+}
+
+.breakdown-value {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        padding: 10px;
+    }
+    
+    .chart-cursor-info {
+        padding: 8px;
+        font-size: 11px;
+    }
+    
+    .chart-breakdown-panel {
+        position: static;
+        margin-top: 10px;
+        width: 100%;
+    }
+}

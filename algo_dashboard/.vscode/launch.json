@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Open algo_backtest_results.html",
+      "file": "/Users/namanvyas/Desktop/algo_dashboard/algo_backtest_results.html"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/bsharishkumar",
+      "program": "/Users/bsharishkumar/build/Debug/outDebug"
+    }
+  ]
+}
